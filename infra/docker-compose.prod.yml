@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  backend:
+    build: ../backend
+    ports:
+      - "3000:3000"
+    environment:
+      - JWT_SECRET=your-secret-key
+      - PORT=3000
+    volumes:
+      - ../backend/database.db:/app/database.db
+
+  frontend:
+    build: ../frontend
+    volumes:
+      - ../frontend:/app
+    ports:
+      - "80:80"
+    depends_on:
+      - backend

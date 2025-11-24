@@ -1,0 +1,36 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "start": "webpack serve --mode development",
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@testing-library/dom": "^8.0.0",
+    "@testing-library/jest-dom": "^5.0.0",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^13.0.0",
+    "@types/jest": "^28.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "html-webpack-plugin": "^5.6.4",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^28.0.0",
+    "jest-environment-jsdom": "^28.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "ts-jest": "^28.0.0",
+    "ts-loader": "^9.5.4",
+    "typescript": "^5.9.3",
+    "vite": "^7.2.2",
+    "webpack": "^5.102.1",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.2"
+  }
+}

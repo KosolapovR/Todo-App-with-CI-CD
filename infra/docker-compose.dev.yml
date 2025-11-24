@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  backend:
+    build: ../backend
+    command: npm run dev
+    ports:
+      - "3000:3000"
+    environment:
+      - JWT_SECRET=your-secret-key
+      - PORT=3000
+    volumes:
+      - ../backend/database.db:/app/database.db
+      - ../backend/index.js:/app/index.js
+      - ../backend/logger.js:/app/logger.js
+      - ../backend/package.json:/app/package.json
+      - ../backend/package-lock.json:/app/package-lock.json
+
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8080:8080"
+    volumes:
+      - ../frontend/package.json:/app/package.json
+      - ../frontend/package-lock.json:/app/package-lock.json
+      - ../frontend/tsconfig.json:/app/tsconfig.json
+      - ../frontend/webpack.config.js:/app/webpack.config.js
+      - ../frontend/public:/app/public
+      - ../frontend/src:/app/src
