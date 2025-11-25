@@ -1,37 +1,7 @@
-const request = require("supertest");
-const app = require("../index");
-const Database = require("better-sqlite3");
+import request from "supertest";
+import app, { clearTodos, clearUsers } from "../index.js";
 
-let db;
-let token;
-
-beforeAll(() => {
-  // Use in-memory database for tests
-  db = new Database(":memory:", { verbose: console.log });
-
-  // Initialize tables
-  db.exec(`
-    CREATE TABLE users (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      username TEXT UNIQUE NOT NULL,
-      password TEXT NOT NULL
-    )
-  `);
-  db.exec(`
-    CREATE TABLE todos (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      user_id INTEGER NOT NULL,
-      title TEXT NOT NULL,
-      completed BOOLEAN DEFAULT 0,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (user_id) REFERENCES users (id)
-    )
-  `);
-});
-
-afterAll(() => {
-  db.close();
-});
+let token: string | undefined;
 
 beforeEach(async () => {
   // Register and login a test user
@@ -44,6 +14,12 @@ beforeEach(async () => {
     .send({ username: "todouser", password: "todopass" });
 
   token = loginResponse.body.token;
+});
+
+afterEach(() => {
+  // Clear all users and todos after each test
+  clearTodos();
+  clearUsers();
 });
 
 describe("Todos API", () => {
@@ -85,8 +61,8 @@ describe("Todos API", () => {
 
     expect(response.status).toBe(200);
     expect(response.body.length).toBe(2);
-    expect(response.body[0].title).toBe("Second todo");
-    expect(response.body[1].title).toBe("First todo");
+    expect(response.body[0].title).toBe("First todo");
+    expect(response.body[1].title).toBe("Second todo");
   });
 
   test("should update a todo", async () => {

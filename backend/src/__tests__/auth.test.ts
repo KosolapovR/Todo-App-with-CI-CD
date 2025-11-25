@@ -1,35 +1,10 @@
-const request = require("supertest");
-const app = require("../index");
-const Database = require("better-sqlite3");
+import request from "supertest";
+import app, { clearTodos, clearUsers } from "../index.js";
 
-let db;
-
-beforeAll(() => {
-  // Use in-memory database for tests
-  db = new Database(":memory:", { verbose: console.log });
-
-  // Initialize tables
-  db.exec(`
-    CREATE TABLE users (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      username TEXT UNIQUE NOT NULL,
-      password TEXT NOT NULL
-    )
-  `);
-  db.exec(`
-    CREATE TABLE todos (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      user_id INTEGER NOT NULL,
-      title TEXT NOT NULL,
-      completed BOOLEAN DEFAULT 0,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (user_id) REFERENCES users (id)
-    )
-  `);
-});
-
-afterAll(() => {
-  db.close();
+afterEach(() => {
+  // Clear all users and todos after each test
+  clearTodos();
+  clearUsers();
 });
 
 describe("Auth API", () => {
