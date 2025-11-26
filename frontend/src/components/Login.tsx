@@ -1,34 +1,20 @@
 import React, { useState } from "react";
+import { useLoginMutation } from "../app/api";
+import { SerializedError } from "@reduxjs/toolkit";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { isHttpError } from "../utils";
 
 interface LoginProps {
-  setToken: (token: string) => void;
   setView: (view: "login" | "register") => void;
 }
 
-const Login: React.FC<LoginProps> = ({ setToken, setView }) => {
+const Login: React.FC<LoginProps> = ({ setView }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-
+  const [login, { error, isLoading }] = useLoginMutation();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        setToken(data.token);
-      } else {
-        setError(data.error);
-      }
-    } catch (err) {
-      setError("Login failed");
-    }
+    login({ username, password });
   };
 
   return (
@@ -53,7 +39,13 @@ const Login: React.FC<LoginProps> = ({ setToken, setView }) => {
             required
           />
         </div>
-        {error && <p className="error">{error}</p>}
+        {error && (
+          <p className="error">
+            {isHttpError(error)
+              ? JSON.stringify(error.data)
+              : JSON.stringify(error.code)}
+          </p>
+        )}
         <button type="submit">Login</button>
       </form>
       <p>

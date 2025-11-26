@@ -1,47 +1,25 @@
 import React, { useState } from "react";
+import { useLoginMutation, useRegisterMutation } from "../app/api";
+import { isHttpError } from "../utils";
 
 interface RegisterProps {
-  setToken: (token: string) => void;
   setView: (view: "login" | "register") => void;
 }
 
-const Register: React.FC<RegisterProps> = ({ setToken, setView }) => {
+const Register: React.FC<RegisterProps> = ({ setView }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const [register, { error: registrationError }] = useRegisterMutation();
+  const [login] = useLoginMutation();
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const response = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        // After registration, login automatically
-        const loginResponse = await fetch("/api/auth/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ username, password }),
-        });
-        const loginData = await loginResponse.json();
-        if (loginResponse.ok) {
-          setToken(loginData.token);
-        } else {
-          setError(loginData.error);
-        }
-      } else {
-        setError(data.error);
-      }
-    } catch (err) {
-      setError("Registration failed");
-    }
+    register({ username, password })
+      .unwrap()
+      .then(() => {
+        login({ username, password });
+      })
+      .catch((error) => {});
   };
 
   return (
@@ -66,7 +44,13 @@ const Register: React.FC<RegisterProps> = ({ setToken, setView }) => {
             required
           />
         </div>
-        {error && <p className="error">{error}</p>}
+        {registrationError && (
+          <p className="error">
+            {isHttpError(registrationError)
+              ? JSON.stringify(registrationError.data)
+              : JSON.stringify(registrationError.code)}
+          </p>
+        )}
         <button type="submit">Register</button>
       </form>
       <p>
