@@ -10,7 +10,7 @@ services:
       - JWT_SECRET=your-secret-key
       - PORT=3000
     volumes:
-      - ../backend/database.db:/app/database.db
+      - ../backend:/app/host_backend
       - ../backend/src:/app/src
       - ../backend/package.json:/app/package.json
       - ../backend/package-lock.json:/app/package-lock.json
