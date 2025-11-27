@@ -7,7 +7,8 @@ import express, {
 import cors from "cors";
 import Database from "better-sqlite3";
 import bcrypt from "bcryptjs";
-import jwt, { type JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
+import logger from "./logger";
 
 interface AuthenticatedUser {
   id: number;
@@ -48,7 +49,6 @@ app.use(express.json());
 // Database setup
 // Initialize database tables
 export function initializeDatabase() {
-  console.log("Initializing database tables");
   try {
     db.exec(`
       CREATE TABLE IF NOT EXISTS users (
@@ -57,9 +57,8 @@ export function initializeDatabase() {
         password TEXT NOT NULL
       )
     `);
-    console.log("Users table created or already exists");
   } catch (err: any) {
-    console.error("Error creating users table:", err?.message);
+    logger.error("Error creating users table:", err?.message);
   }
 
   try {
@@ -73,27 +72,24 @@ export function initializeDatabase() {
         FOREIGN KEY (user_id) REFERENCES users (id)
       )
     `);
-    console.log("Todos table created or already exists");
   } catch (err: any) {
-    console.error("Error creating todos table:", err?.message);
+    logger.error("Error creating todos table:", err?.message);
   }
 }
 
 export function clearTodos() {
   try {
     db.exec("DELETE FROM todos");
-    console.log("All todos cleared");
   } catch (err: any) {
-    console.error("Error clearing todos:", err?.message);
+    logger.error("Error clearing todos:", err?.message);
   }
 }
 
 export function clearUsers() {
   try {
     db.exec("DELETE FROM users");
-    console.log("All users cleared");
   } catch (err: any) {
-    console.error("Error clearing users:", err?.message);
+    logger.error("Error clearing users:", err?.message);
   }
 }
 
@@ -103,7 +99,6 @@ function authenticateToken(
   res: Response,
   next: NextFunction
 ) {
-  console.log("authenticateToken");
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
 
@@ -126,32 +121,26 @@ initializeDatabase();
 
 // Auth routes
 app.post("/api/auth/register", async (req: Request, res: Response) => {
-  console.log("api/auth/register called with:", req.body);
   const { username, password } = req.body;
 
   if (!username || !password) {
-    console.log("Missing username or password");
     return res.status(400).json({ error: "Username and password required" });
   }
 
   try {
-    console.log("Hashing password");
     const hashedPassword = await bcrypt.hash(password, 10);
-    console.log("Password hashed, inserting into database");
     const stmt = db.prepare(
       "INSERT INTO users (username, password) VALUES (?, ?)"
     );
     stmt.run(username, hashedPassword);
-    console.log("User registered successfully");
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
     const err = error instanceof Error ? error : new Error(String(error));
-    console.log("Database error:", err.message);
+    logger.error("Database error:", err.message);
     if (err.message.includes("UNIQUE constraint failed")) {
-      console.log("Username already exists");
       return res.status(400).json({ error: "Username already exists" });
     }
-    console.log("Server error:", err);
+    logger.error("Server error:", err);
     res.status(500).json({ error: "Server error" });
   }
 });
@@ -179,7 +168,7 @@ app.post("/api/auth/login", async (req: Request, res: Response) => {
     res.json({ token });
   } catch (error) {
     const err = error instanceof Error ? error : new Error(String(error));
-    console.log("Database error:", err.message);
+    logger.error("Database error:", err.message);
     res.status(500).json({ error: "Database error" });
   }
 });
@@ -198,7 +187,7 @@ app.get(
       const rows = stmt.all(req.user.id) as Todo[];
       res.json(rows);
     } catch (error) {
-      console.log(
+      logger.error(
         "Database error:",
         error instanceof Error ? error.message : String(error)
       );
@@ -225,7 +214,7 @@ app.post(
         .status(201)
         .json({ id: result.lastInsertRowid, title, completed: false });
     } catch (error) {
-      console.log(
+      logger.error(
         "Database error:",
         error instanceof Error ? error.message : String(error)
       );
@@ -270,7 +259,7 @@ app.put(
         return res.status(404).json({ error: "Todo not found" });
       res.json({ message: "Todo updated" });
     } catch (error) {
-      console.log(
+      logger.error(
         "Database error:",
         error instanceof Error ? error.message : String(error)
       );
@@ -294,7 +283,7 @@ app.delete(
         return res.status(404).json({ error: "Todo not found" });
       res.json({ message: "Todo deleted" });
     } catch (error) {
-      console.log(
+      logger.error(
         "Database error:",
         error instanceof Error ? error.message : String(error)
       );
@@ -304,14 +293,13 @@ app.delete(
 );
 
 app.get("/api/health", (req, res) => {
-  console.log("Health check called");
   res.json({ status: "OK", timestamp: new Date().toISOString() });
 });
 
 // Only start the server if not running tests
 if (process.env.NODE_ENV !== "test") {
   app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    logger.info(`Server running on port ${PORT}`);
   });
 }
 

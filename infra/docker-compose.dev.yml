@@ -11,8 +11,7 @@ services:
       - PORT=3000
     volumes:
       - ../backend/database.db:/app/database.db
-      - ../backend/index.js:/app/index.js
-      - ../backend/logger.js:/app/logger.js
+      - ../backend/src:/app/src
       - ../backend/package.json:/app/package.json
       - ../backend/package-lock.json:/app/package-lock.json
 
