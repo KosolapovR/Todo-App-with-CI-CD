@@ -10,6 +10,10 @@ const App: React.FC = () => {
   const dispatch = useAppDispatch();
   const [view, setView] = useState<"login" | "register">("login");
 
+  useEffect(() => {
+    console.log("Application successfuly mounted!");
+  }, []);
+
   if (!token) {
     return (
       <div className="app">
@@ -22,10 +26,6 @@ const App: React.FC = () => {
       </div>
     );
   }
-
-  useEffect(() => {
-    console.log("Application successfuly mounted!");
-  }, []);
 
   return (
     <div className="app">
