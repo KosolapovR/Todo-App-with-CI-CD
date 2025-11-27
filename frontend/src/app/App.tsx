@@ -25,7 +25,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     console.log("Application successfuly mounted!");
-  });
+  }, []);
 
   return (
     <div className="app">
