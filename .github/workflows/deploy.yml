@@ -19,5 +19,5 @@ jobs:
             git pull
             docker-compose down
             docker rmi $(docker images -q) -f || true
-            docker-compose up --build -d 
+            docker-compose -f infra/docker-compose.prod.yml up --build -d 
             exit 0
