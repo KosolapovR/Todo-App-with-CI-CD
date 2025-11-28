@@ -1,17 +1,15 @@
-import React, { useState } from "react";
-import { useLoginMutation } from "../app/api";
-import { SerializedError } from "@reduxjs/toolkit";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { isHttpError } from "../utils";
+import React, { useState } from 'react';
+import { useLoginMutation } from '../app/api';
+import { isHttpError } from '../utils';
 
 interface LoginProps {
-  setView: (view: "login" | "register") => void;
+  setView: (view: 'login' | 'register') => void;
 }
 
 const Login: React.FC<LoginProps> = ({ setView }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [login, { error, isLoading }] = useLoginMutation();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [login, { error }] = useLoginMutation();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     login({ username, password });
@@ -49,8 +47,8 @@ const Login: React.FC<LoginProps> = ({ setView }) => {
         <button type="submit">Login</button>
       </form>
       <p>
-        Don't have an account?{" "}
-        <button onClick={() => setView("register")}>Register</button>
+        Don't have an account?{' '}
+        <button onClick={() => setView('register')}>Register</button>
       </p>
     </div>
   );

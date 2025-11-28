@@ -1,7 +1,7 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { authApi, todoApi } from "./api";
-import { setupListeners } from "@reduxjs/toolkit/query";
-import authReducer from "../features/auth/authSlice";
+import { configureStore } from '@reduxjs/toolkit';
+import { authApi, todoApi } from './api';
+import { setupListeners } from '@reduxjs/toolkit/query';
+import authReducer from '../features/auth/authSlice';
 
 export const store = configureStore({
   reducer: {
@@ -11,7 +11,7 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(todoApi.middleware, authApi.middleware),
-  preloadedState: { auth: { token: localStorage.getItem("token") } },
+  preloadedState: { auth: { token: localStorage.getItem('token') } },
 });
 
 setupListeners(store.dispatch);

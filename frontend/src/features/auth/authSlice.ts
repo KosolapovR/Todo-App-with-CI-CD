@@ -1,15 +1,15 @@
 // authSlice.js
-import { createSlice } from "@reduxjs/toolkit";
-import { authApi } from "../../app/api";
+import { createSlice } from '@reduxjs/toolkit';
+import { authApi } from '../../app/api';
 
 const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState: {
     token: null,
   },
   reducers: {
     logout: (state) => {
-      localStorage.removeItem("token");
+      localStorage.removeItem('token');
       state.token = null;
     },
   },
@@ -18,7 +18,7 @@ const authSlice = createSlice({
       authApi.endpoints.login.matchFulfilled,
       (state, { payload }) => {
         state.token = payload.token;
-        localStorage.setItem("token", payload.token);
+        localStorage.setItem('token', payload.token);
       }
     );
   },
