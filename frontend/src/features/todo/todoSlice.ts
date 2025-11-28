@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IViewTodo } from "../../types";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IViewTodo } from '../../types';
 
 export interface ITodoState {
   items: IViewTodo[];
@@ -7,7 +7,7 @@ export interface ITodoState {
 const initialState: ITodoState = { items: [] };
 
 export const todoSlice = createSlice({
-  name: "todo",
+  name: 'todo',
   initialState,
   reducers: {
     addTodo: (state, action: PayloadAction<IViewTodo>) => {

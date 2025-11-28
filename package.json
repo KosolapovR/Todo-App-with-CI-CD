@@ -1,0 +1,21 @@
+{
+  "name": "todo-app-monorepo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test --workspaces",
+    "test:e2e": "npm run test --workspaces=e2e",
+    "test:ci": "npm run test --workspace=backend --workspace=frontend",
+    "lint": "npm run lint --workspaces",
+    "format": "npm run format --workspaces"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "workspaces": [
+    "backend",
+    "frontend",
+    "e2e"
+  ]
+}
