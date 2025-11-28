@@ -1,4 +1,10 @@
 module.exports = {
+  ignorePatterns: [
+    '.eslintrc.js',
+    'dist/**/*',
+    'jest.config.js',
+    'webpack.config.js',
+  ],
   extends: ['airbnb-typescript', 'prettier'],
   parserOptions: {
     project: './tsconfig.json',
