@@ -29,7 +29,6 @@
     "jsx": "react-jsx",
 
     "isolatedModules": true,
-    "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true
   }

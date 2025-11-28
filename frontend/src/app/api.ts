@@ -1,68 +1,68 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { IViewTodo } from "../types";
-import { RootState } from "./store";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import type { IViewTodo } from '../types';
+import { RootState } from './store';
 
 // Define a service using a base URL and expected endpoints
 export const todoApi = createApi({
-  reducerPath: "todosApi",
+  reducerPath: 'todosApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: "/api/",
+    baseUrl: '/api/',
     prepareHeaders: (headers, { getState }) => {
       // Get the token from your Redux store's auth slice
       const token = (getState() as RootState).auth.token;
       if (token) {
-        headers.set("authorization", `Bearer ${token}`);
+        headers.set('authorization', `Bearer ${token}`);
       }
-      if (!headers.has("Content-Type")) {
-        headers.set("Content-Type", "application/json");
+      if (!headers.has('Content-Type')) {
+        headers.set('Content-Type', 'application/json');
       }
 
       return headers;
     },
   }),
-  tagTypes: ["Todo"],
+  tagTypes: ['Todo'],
   endpoints: (build) => ({
     getTodoById: build.query<IViewTodo, number>({
       query: (id) => `todos/${id}`,
     }),
     getAllTodos: build.query<IViewTodo[], void>({
-      query: () => "todos",
-      providesTags: ["Todo"],
+      query: () => 'todos',
+      providesTags: ['Todo'],
     }),
     postTodo: build.mutation<IViewTodo, { title: string }>({
       query: (body) => ({
-        url: "todos",
-        method: "POST",
+        url: 'todos',
+        method: 'POST',
         body,
       }),
-      invalidatesTags: ["Todo"],
+      invalidatesTags: ['Todo'],
     }),
     deleteTodo: build.mutation<void, number>({
       query: (id) => ({
         url: `todos/${id}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
-      invalidatesTags: ["Todo"],
+      invalidatesTags: ['Todo'],
     }),
     updateTodo: build.mutation<void, IViewTodo>({
       query: (body) => ({
         url: `todos/${body.id}`,
-        method: "PUT",
+        method: 'PUT',
         body,
       }),
-      invalidatesTags: ["Todo"],
+      invalidatesTags: ['Todo'],
     }),
   }),
 });
 
 // Define a service using a base URL and expected endpoints
 export const authApi = createApi({
-  reducerPath: "authApi",
+  reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: "/api/auth/",
+    baseUrl: '/api/auth/',
     prepareHeaders: (headers) => {
-      if (!headers.has("Content-Type")) {
-        headers.set("Content-Type", "application/json");
+      if (!headers.has('Content-Type')) {
+        headers.set('Content-Type', 'application/json');
       }
 
       return headers;
@@ -74,21 +74,21 @@ export const authApi = createApi({
       { username: string; password: string }
     >({
       query: (body) => ({
-        url: "login",
-        method: "POST",
+        url: 'login',
+        method: 'POST',
         body,
       }),
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-          dispatch(todoApi.util.invalidateTags(["Todo"]));
+          dispatch(todoApi.util.invalidateTags(['Todo']));
         } catch (error) {}
       },
     }),
     register: build.mutation<void, { username: string; password: string }>({
       query: (body) => ({
-        url: "register",
-        method: "POST",
+        url: 'register',
+        method: 'POST',
         body,
       }),
     }),

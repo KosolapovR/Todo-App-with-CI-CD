@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   useDeleteTodoMutation,
   useGetAllTodosQuery,
   usePostTodoMutation,
   useUpdateTodoMutation,
-} from "../app/api";
-import { IViewTodo } from "../types";
-import { isHttpError } from "../utils";
+} from '../app/api';
+import { IViewTodo } from '../types';
+import { isHttpError } from '../utils';
 
 const TodoList: React.FC = () => {
-  const [newTodo, setNewTodo] = useState("");
+  const [newTodo, setNewTodo] = useState('');
   const { data, error, isLoading } = useGetAllTodosQuery();
   const [postTodo] = usePostTodoMutation();
   const [deleteTodo] = useDeleteTodoMutation();
@@ -18,7 +18,7 @@ const TodoList: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     postTodo({ title: newTodo });
-    setNewTodo("");
+    setNewTodo('');
   };
 
   const handleToggleTodo = async (todo: IViewTodo) => {
@@ -31,7 +31,7 @@ const TodoList: React.FC = () => {
 
   return (
     <div className="todo-list">
-      <h2>My Todos!</h2>
+      <h2>My Todos</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -54,7 +54,7 @@ const TodoList: React.FC = () => {
           <>loading...</>
         ) : (
           (data || []).map((todo) => (
-            <li key={todo.id} className={todo.completed ? "completed" : ""}>
+            <li key={todo.id} className={todo.completed ? 'completed' : ''}>
               <input
                 type="checkbox"
                 checked={!!todo.completed}

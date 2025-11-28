@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { useLoginMutation, useRegisterMutation } from "../app/api";
-import { isHttpError } from "../utils";
+import React, { useState } from 'react';
+import { useLoginMutation, useRegisterMutation } from '../app/api';
+import { isHttpError } from '../utils';
 
 interface RegisterProps {
-  setView: (view: "login" | "register") => void;
+  setView: (view: 'login' | 'register') => void;
 }
 
 const Register: React.FC<RegisterProps> = ({ setView }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   const [register, { error: registrationError }] = useRegisterMutation();
   const [login] = useLoginMutation();
@@ -19,7 +19,7 @@ const Register: React.FC<RegisterProps> = ({ setView }) => {
       .then(() => {
         login({ username, password });
       })
-      .catch((error) => {});
+      .catch(() => {});
   };
 
   return (
@@ -54,8 +54,8 @@ const Register: React.FC<RegisterProps> = ({ setView }) => {
         <button type="submit">Register</button>
       </form>
       <p>
-        Already have an account?{" "}
-        <button onClick={() => setView("login")}>Login</button>
+        Already have an account?{' '}
+        <button onClick={() => setView('login')}>Login</button>
       </p>
     </div>
   );

@@ -1,52 +1,52 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from '@playwright/test';
 
-test.describe("Todo App E2E", () => {
-  test("should register, login, and manage todos", async ({ page }) => {
+test.describe('Todo App E2E', () => {
+  test('should register, login, and manage todos', async ({ page }) => {
     // Assuming the app is running on localhost:3000 for frontend and backend on 3000
-    await page.goto("http://localhost:80");
+    await page.goto('http://194.87.215.192:80');
 
     await page.click('button:has-text("Register")');
 
     // Register a new user
-    await page.fill('input[type="text"]', "e2euser");
-    await page.fill('input[type="password"]', "e2epass");
+    await page.fill('input[type="text"]', 'e2euser');
+    await page.fill('input[type="password"]', 'e2epass');
     await page.click('button:has-text("Register")');
 
     // Should be logged in and see todo list
-    await expect(page.locator("h2")).toHaveText("My Todos");
+    await expect(page.locator('h2')).toHaveText('My Todos');
 
     // Add a todo
     await page.fill(
       'input[placeholder="Add a new todo"]',
-      "Test todo from e2e"
+      'Test todo from e2e'
     );
     await page.click('button:has-text("Add")');
 
     // Check if todo is added
-    await expect(page.locator("li")).toContainText("Test todo from e2e");
+    await expect(page.locator('li')).toContainText('Test todo from e2e');
 
     // Mark as completed
     await page.check('input[type="checkbox"]');
-    await expect(page.locator("li")).toHaveClass(/completed/);
+    await expect(page.locator('li')).toHaveClass(/completed/);
 
     // Delete the todo
     await page.click('button:has-text("Delete")');
-    await expect(page.locator("li")).toHaveCount(0);
+    await expect(page.locator('li')).toHaveCount(0);
 
     // Logout
     await page.click('button:has-text("Logout")');
-    await expect(page.locator("h2")).toHaveText("Login");
+    await expect(page.locator('h2')).toHaveText('Login');
   });
 
-  test("should login with existing user", async ({ page }) => {
-    await page.goto("http://localhost:3000");
+  test('should login with existing user', async ({ page }) => {
+    await page.goto('http://194.87.215.192:80');
 
     // Login
-    await page.fill('input[type="text"]', "e2euser");
-    await page.fill('input[type="password"]', "e2epass");
+    await page.fill('input[type="text"]', 'e2euser');
+    await page.fill('input[type="password"]', 'e2epass');
     await page.click('button:has-text("Login")');
 
     // Should be logged in
-    await expect(page.locator("h2")).toHaveText("My Todos");
+    await expect(page.locator('h2')).toHaveText('My Todos');
   });
 });
