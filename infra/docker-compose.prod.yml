@@ -2,20 +2,21 @@ version: "3.8"
 
 services:
   backend:
-    build: ../backend
+    image: kosolapovr/todo-app-backend
     ports:
       - "3000:3000"
     environment:
       - JWT_SECRET=your-secret-key
       - PORT=3000
     volumes:
-      - ../backend/database.db:/app/database.db
+      - todo-db:/app/database.db
 
   frontend:
-    build: ../frontend
-    volumes:
-      - ../frontend:/app
+    image: kosolapovr/todo-app-frontend
     ports:
       - "80:80"
     depends_on:
       - backend
+
+volumes:
+  todo-db:
