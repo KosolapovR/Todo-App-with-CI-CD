@@ -14,6 +14,12 @@ const App: React.FC = () => {
     console.log('Application successfuly mounted!');
   }, []);
 
+  useEffect(() => {
+    if (!token) {
+      setView('login');
+    }
+  }, [token]);
+
   if (!token) {
     return (
       <div className="app">
