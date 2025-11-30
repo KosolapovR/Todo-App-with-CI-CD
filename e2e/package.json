@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
+    "test:dev": "BASE_URL=http://localhost:8080 playwright test",
     "test:headed": "playwright test --headed",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write ."
@@ -14,14 +15,15 @@
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.56.1",
-    "prettier": "^3.0.0",
-    "eslint": "^8.0.0",
+    "@types/node": "^24.10.1",
     "@typescript-eslint/eslint-plugin": "^8.48.0",
     "@typescript-eslint/parser": "^8.48.0",
+    "eslint": "^8.0.0",
     "eslint-config-airbnb-typescript-base": "7.0.0-alpha.1",
     "eslint-config-prettier": "^8.0.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.0.0",
     "typescript": "5.3.3"
   }
 }

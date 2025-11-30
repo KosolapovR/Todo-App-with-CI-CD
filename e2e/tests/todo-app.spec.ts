@@ -1,15 +1,19 @@
 import { test, expect } from '@playwright/test';
 
+const uniqueUserLogin = `e2euser${Date.now()}`;
+const userPassword = 'e2epass';
+
 test.describe('Todo App E2E', () => {
   test('should register, login, and manage todos', async ({ page }) => {
-    // Assuming the app is running on localhost:3000 for frontend and backend on 3000
-    await page.goto('http://194.87.215.192:80');
+    const baseUrl = process.env.BASE_URL || 'http://194.87.215.192:80';
+    await page.goto(baseUrl);
 
     await page.click('button:has-text("Register")');
 
-    // Register a new user
-    await page.fill('input[type="text"]', 'e2euser');
-    await page.fill('input[type="password"]', 'e2epass');
+    // Register a new user with unique username
+
+    await page.fill('input[type="text"]', uniqueUserLogin);
+    await page.fill('input[type="password"]', userPassword);
     await page.click('button:has-text("Register")');
 
     // Should be logged in and see todo list
@@ -26,7 +30,7 @@ test.describe('Todo App E2E', () => {
     await expect(page.locator('li')).toContainText('Test todo from e2e');
 
     // Mark as completed
-    await page.check('input[type="checkbox"]');
+    await page.click('input[type="checkbox"]');
     await expect(page.locator('li')).toHaveClass(/completed/);
 
     // Delete the todo
@@ -39,11 +43,12 @@ test.describe('Todo App E2E', () => {
   });
 
   test('should login with existing user', async ({ page }) => {
-    await page.goto('http://194.87.215.192:80');
+    const baseUrl = process.env.BASE_URL || 'http://194.87.215.192:80';
+    await page.goto(baseUrl);
 
     // Login
-    await page.fill('input[type="text"]', 'e2euser');
-    await page.fill('input[type="password"]', 'e2epass');
+    await page.fill('input[type="text"]', uniqueUserLogin);
+    await page.fill('input[type="password"]', userPassword);
     await page.click('button:has-text("Login")');
 
     // Should be logged in

@@ -4,7 +4,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "lib": ["esnext"],
-    "types": ["@playwright/test"],
+    "types": ["@playwright/test", "node"],
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
