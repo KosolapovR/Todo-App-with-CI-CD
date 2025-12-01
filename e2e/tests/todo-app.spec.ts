@@ -47,8 +47,8 @@ test.describe('Todo App E2E', () => {
     await page.goto(baseUrl);
 
     // Login
-    await page.fill('input[type="text"]', uniqueUserLogin);
-    await page.fill('input[type="password"]', userPassword);
+    await page.fill('input[type="text"]', 'e2euser');
+    await page.fill('input[type="password"]', 'e2epass');
     await page.click('button:has-text("Login")');
 
     // Should be logged in
