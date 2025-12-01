@@ -1,12 +1,12 @@
 name: Deploy
 on:
-  pull_request:
+  workflow_run:
+    workflows: ["Build and Push Docker Images"]
+    types: [completed]
     branches: [main]
-    types:
-      - closed
 jobs:
   deploy:
-    if: github.event.pull_request.merged == true
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Deploy NodeJS app
