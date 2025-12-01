@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run test --workspaces",
-    "test:e2e": "npm run test --workspaces=e2e",
+    "test:e2e": "npm run test --workspace=e2e",
     "test:ci": "npm run test --workspace=backend --workspace=frontend",
     "lint": "npm run lint --workspaces",
     "format": "npm run format --workspaces"
