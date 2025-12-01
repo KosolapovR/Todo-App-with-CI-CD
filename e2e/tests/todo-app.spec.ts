@@ -40,15 +40,10 @@ test.describe('Todo App E2E', () => {
     // Logout
     await page.click('button:has-text("Logout")');
     await expect(page.locator('h2')).toHaveText('Login');
-  });
-
-  test('should login with existing user', async ({ page }) => {
-    const baseUrl = process.env.BASE_URL || 'http://194.87.215.192:80';
-    await page.goto(baseUrl);
 
     // Login
-    await page.fill('input[type="text"]', 'e2euser');
-    await page.fill('input[type="password"]', 'e2epass');
+    await page.fill('input[type="text"]', uniqueUserLogin);
+    await page.fill('input[type="password"]', userPassword);
     await page.click('button:has-text("Login")');
 
     // Should be logged in
