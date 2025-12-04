@@ -20,6 +20,7 @@ module.exports = {
           '**/*.test.{ts,tsx}',
           '**/*.spec.{ts,tsx}',
           'src/setupTests.ts',
+          'src/mocks/*',
         ],
       },
     ],

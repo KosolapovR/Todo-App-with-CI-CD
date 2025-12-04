@@ -37,10 +37,12 @@ const TodoList: React.FC = () => {
           type="text"
           value={newTodo}
           onChange={(e) => setNewTodo(e.target.value)}
-          placeholder="Add a new todo"
+          placeholder="Todo"
           required
         />
-        <button type="submit">Add</button>
+        <button type="submit" disabled={!Boolean(newTodo)}>
+          Add
+        </button>
       </form>
       {error && (
         <p className="error">

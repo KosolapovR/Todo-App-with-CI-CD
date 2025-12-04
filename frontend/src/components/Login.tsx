@@ -20,8 +20,10 @@ const Login: React.FC<LoginProps> = ({ setView }) => {
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Username:</label>
+          <label htmlFor="username">Username:</label>
           <input
+            id="username"
+            name="username"
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -29,8 +31,10 @@ const Login: React.FC<LoginProps> = ({ setView }) => {
           />
         </div>
         <div>
-          <label>Password:</label>
+          <label htmlFor="password">Password:</label>
           <input
+            id="password"
+            name="password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}

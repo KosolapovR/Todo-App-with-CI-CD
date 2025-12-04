@@ -27,8 +27,10 @@ const Register: React.FC<RegisterProps> = ({ setView }) => {
       <h2>Register</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Username:</label>
+          <label htmlFor="username">Username:</label>
           <input
+            id="username"
+            name="username"
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -36,8 +38,10 @@ const Register: React.FC<RegisterProps> = ({ setView }) => {
           />
         </div>
         <div>
-          <label>Password:</label>
+          <label htmlFor="password">Password:</label>
           <input
+            id="password"
+            name="password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
