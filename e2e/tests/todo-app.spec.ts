@@ -20,10 +20,7 @@ test.describe('Todo App E2E', () => {
     await expect(page.locator('h2')).toHaveText('My Todos');
 
     // Add a todo
-    await page.fill(
-      'input[placeholder="Add a new todo"]',
-      'Test todo from e2e'
-    );
+    await page.fill('input[placeholder="Todo"]', 'Test todo from e2e');
     await page.click('button:has-text("Add")');
 
     // Check if todo is added
