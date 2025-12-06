@@ -14,6 +14,6 @@ describe('App', () => {
         </Provider>
       )
     );
-    expect(screen.getByPlaceholderText('Todo')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Add a new todo')).toBeInTheDocument();
   });
 });

@@ -10,9 +10,16 @@ module.exports = {
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    },
   },
   module: {
     rules: [
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
+      },
       {
         test: /\.tsx?$/,
         use: 'ts-loader',
@@ -34,7 +41,7 @@ module.exports = {
     proxy: [
       {
         context: ['/api'],
-        target: 'http://backend:3000',
+        target: 'http://localhost:5010',
         changeOrigin: true,
       },
     ],

@@ -43,7 +43,9 @@ describe('App', () => {
     const registerButton = screen.getByRole('button', { name: 'Register' });
     expect(registerButton).toBeInTheDocument();
 
-    await userEvent.click(registerButton);
+    await act(async () => {
+      await userEvent.click(registerButton);
+    });
     expect(screen.getByText('Already have an account?')).toBeInTheDocument();
   });
 
@@ -61,8 +63,12 @@ describe('App', () => {
     const passwordInput = screen.getByLabelText('Password:');
     const loginButton = screen.getByRole('button', { name: 'Login' });
 
-    await userEvent.type(usernameInput, 'testuser');
-    await userEvent.type(passwordInput, 'testpass');
+    await act(async () => {
+      await userEvent.type(usernameInput, 'testuser');
+    });
+    await act(async () => {
+      await userEvent.type(passwordInput, 'testpass');
+    });
     await act(async () => {
       await userEvent.click(loginButton);
     });
@@ -83,7 +89,9 @@ describe('App', () => {
     );
     // Navigate to register
     const registerButton = screen.getByRole('button', { name: 'Register' });
-    await userEvent.click(registerButton);
+    await act(async () => {
+      await userEvent.click(registerButton);
+    });
 
     const usernameInput = screen.getByLabelText('Username:');
     const passwordInput = screen.getByLabelText('Password:');
@@ -91,8 +99,12 @@ describe('App', () => {
       name: 'Register',
     });
 
-    await userEvent.type(usernameInput, 'newuser');
-    await userEvent.type(passwordInput, 'newpass');
+    await act(async () => {
+      await userEvent.type(usernameInput, 'newuser');
+    });
+    await act(async () => {
+      await userEvent.type(passwordInput, 'newpass');
+    });
     await act(async () => {
       await userEvent.click(registerSubmitButton);
     });
@@ -116,13 +128,17 @@ describe('App', () => {
     const loginButton = screen.getByRole('button', { name: 'Login' });
 
     // login
-    await userEvent.type(usernameInput, 'testuser');
-    await userEvent.type(passwordInput, 'testpass');
+    await act(async () => {
+      await userEvent.type(usernameInput, 'testuser');
+    });
+    await act(async () => {
+      await userEvent.type(passwordInput, 'testpass');
+    });
     await act(async () => {
       await userEvent.click(loginButton);
     });
 
-    const todoNameInput = await screen.findByPlaceholderText('Todo');
+    const todoNameInput = await screen.findByPlaceholderText('Add a new todo');
     expect(todoNameInput).toHaveAttribute('required');
   });
 
@@ -140,14 +156,20 @@ describe('App', () => {
     const loginButton = screen.getByRole('button', { name: 'Login' });
 
     // login
-    await userEvent.type(usernameInput, 'testuser');
-    await userEvent.type(passwordInput, 'testpass');
+    await act(async () => {
+      await userEvent.type(usernameInput, 'testuser');
+    });
+    await act(async () => {
+      await userEvent.type(passwordInput, 'testpass');
+    });
     await act(async () => {
       await userEvent.click(loginButton);
     });
 
-    const todoNameInput = await screen.findByPlaceholderText('Todo');
-    await userEvent.clear(todoNameInput);
+    const todoNameInput = await screen.findByPlaceholderText('Add a new todo');
+    await act(async () => {
+      await userEvent.clear(todoNameInput);
+    });
 
     const addTodoButton = screen.getByRole('button', { name: 'Add' });
     expect(addTodoButton).toBeDisabled();
@@ -167,14 +189,20 @@ describe('App', () => {
     const loginButton = screen.getByRole('button', { name: 'Login' });
 
     // login
-    await userEvent.type(usernameInput, 'testuser');
-    await userEvent.type(passwordInput, 'testpass');
+    await act(async () => {
+      await userEvent.type(usernameInput, 'testuser');
+    });
+    await act(async () => {
+      await userEvent.type(passwordInput, 'testpass');
+    });
     await act(async () => {
       await userEvent.click(loginButton);
     });
 
-    const todoNameInput = await screen.findByPlaceholderText('Todo');
-    await userEvent.type(todoNameInput, '0');
+    const todoNameInput = await screen.findByPlaceholderText('Add a new todo');
+    await act(async () => {
+      await userEvent.type(todoNameInput, '0');
+    });
 
     const addTodoButton = screen.getByRole('button', { name: 'Add' });
     expect(addTodoButton).not.toBeDisabled();
