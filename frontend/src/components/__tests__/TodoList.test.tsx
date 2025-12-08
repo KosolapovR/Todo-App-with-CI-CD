@@ -4,8 +4,8 @@ import TodoList from '../TodoList';
 import { setupStore } from '../../app/store';
 import { Provider } from 'react-redux';
 
-describe('App', () => {
-  test('title rendered', async () => {
+describe('TodoList', () => {
+  test('render input', async () => {
     const store = setupStore({});
     await act(async () =>
       render(

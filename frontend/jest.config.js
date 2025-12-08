@@ -15,4 +15,16 @@ module.exports = {
   testEnvironmentOptions: {
     customExportConditions: ['msw'],
   },
+  coverageThreshold: {
+    global: {
+      branches: 60,
+      functions: 80,
+      lines: 80,
+      statemen: 80,
+    },
+  },
+  coveragePathIgnorePatterns: [
+    '<rootDir>/src/mocks/',
+    '<rootDir>/node_modules/',
+  ],
 };

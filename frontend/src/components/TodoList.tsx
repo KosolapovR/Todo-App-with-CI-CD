@@ -66,16 +66,19 @@ const TodoList: React.FC = () => {
               className={`flex items-center p-3 bg-gray-50 rounded-md hover:bg-gray-100 transition-colors duration-200 ${todo.completed ? 'opacity-60' : ''}`}
             >
               <input
+                id={todo.id.toString()}
                 type="checkbox"
                 checked={!!todo.completed}
+                aria-checked={!!todo.completed}
                 onChange={() => handleToggleTodo(todo)}
                 className="mr-3 h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
               />
-              <span
+              <label
+                htmlFor={todo.id.toString()}
                 className={`flex-1 text-gray-700 ${todo.completed ? 'line-through text-gray-500' : ''}`}
               >
                 {todo.title}
-              </span>
+              </label>
               <Button
                 variant="destructive"
                 size="sm"

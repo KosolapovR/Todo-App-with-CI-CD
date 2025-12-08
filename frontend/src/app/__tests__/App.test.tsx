@@ -1,12 +1,12 @@
 import { act } from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import {  prettyDOM, render, screen, waitFor, within } from '@testing-library/react';
 import App from '../App';
 import { Provider } from 'react-redux';
 import { setupStore } from '../store';
 import userEvent from '@testing-library/user-event';
 
 describe('App', () => {
-  test('title rendered', async () => {
+  test('render title', async () => {
     const store = setupStore();
     await act(async () =>
       render(
@@ -30,6 +30,68 @@ describe('App', () => {
     expect(screen.getByText("Don't have an account?")).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Login' })).toBeInTheDocument();
   });
+  
+  test('render todoList if token is defined', async () => {
+    const store = setupStore({auth: {token: 'tokenId'}});
+    await act(async () =>
+      render(
+        <Provider store={store}>
+          <App />
+        </Provider>
+      )
+    );
+    expect(screen.getByText("My Todos")).toBeInTheDocument();
+  });
+
+  test('toggle todo', async () => {
+    const store = setupStore({auth: {token: 'tokenId'}});
+    await act(async () =>
+      render(
+        <Provider store={store}>
+          <App />
+        </Provider>
+      )
+    );
+
+    await waitFor( () => expect(screen.getAllByText(/mock todo \d/i)).toHaveLength(2))
+
+    const checkbox = screen.getByLabelText(/mock todo 1/i);
+
+    expect(checkbox).not.toBeChecked();
+
+    await act(async () => {
+      userEvent.click(checkbox);
+    })
+    await waitFor(() => expect(checkbox).toBeChecked());
+
+    await act(async () => {
+      userEvent.click(checkbox);
+    })
+
+    await waitFor(() => expect(checkbox).not.toBeChecked());
+  })
+
+  test('delete todo', async () => {
+    const store = setupStore({auth: {token: 'tokenId'}});
+    await act(async () =>
+      render(
+        <Provider store={store}>
+          <App />
+        </Provider>
+      )
+    );
+
+    await waitFor( () => expect(screen.getAllByText(/mock todo \d/i)).toHaveLength(2))
+
+    const firstTodo = screen.getAllByRole('listitem')[0];
+    const deleteBtn= within(firstTodo).getByRole('button', { name: /delete/i })
+
+    await act(async () => {
+      userEvent.click(deleteBtn);
+    })
+    await waitFor(() => expect(firstTodo).not.toBeInTheDocument());
+  })
+
 
   test('allow navigate to registration page', async () => {
     const store = setupStore();
