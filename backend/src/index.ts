@@ -37,7 +37,7 @@ interface CustomRequest extends Request {
 
 // Determine database path based on environment
 const isTest = process.env.NODE_ENV === 'test';
-const dbPath = isTest ? ':memory:' : '.data/database.db';
+const dbPath = isTest ? ':memory:' : './data/database.db';
 
 // Ensure database directory exists (for non-test)
 if (!isTest) {
