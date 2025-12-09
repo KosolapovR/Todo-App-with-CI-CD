@@ -37,23 +37,14 @@ interface CustomRequest extends Request {
 
 // Determine database path based on environment
 const isTest = process.env.NODE_ENV === 'test';
-const dbPath = isTest ? ':memory:' : './database.db';
+const dbPath = isTest ? ':memory:' : '.data/database.db';
 
-// Ensure database directory and file exist (for non-test)
+// Ensure database directory exists (for non-test)
 if (!isTest) {
   const dbDir = path.dirname(dbPath);
   if (!fs.existsSync(dbDir)) {
     fs.mkdirSync(dbDir, { recursive: true });
     logger.info('Database directory created:', dbDir);
-  }
-  if (!fs.existsSync(dbPath)) {
-    try {
-      fs.writeFileSync(dbPath, '');
-      logger.info('Database file created:', dbPath);
-    } catch (err) {
-      logger.error('Failed to create database file:', err);
-      throw err; // Exit if cannot create
-    }
   }
 }
 
