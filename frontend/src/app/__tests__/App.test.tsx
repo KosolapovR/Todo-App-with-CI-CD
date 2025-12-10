@@ -18,6 +18,8 @@ describe('App', () => {
     expect(screen.getByText('Todo App')).toBeInTheDocument();
   });
 
+  test.todo('show skeleton on loading');
+
   test('login page rendered if token is empty', async () => {
     const store = setupStore();
     await act(async () =>

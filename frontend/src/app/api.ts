@@ -82,7 +82,9 @@ export const authApi = createApi({
         try {
           await queryFulfilled;
           dispatch(todoApi.util.invalidateTags(['Todo']));
-        } catch (error) {}
+        } catch (err) {
+          console.log(err);
+        }
       },
     }),
     register: build.mutation<void, { username: string; password: string }>({

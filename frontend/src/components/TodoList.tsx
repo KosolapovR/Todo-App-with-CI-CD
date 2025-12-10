@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import {
   useDeleteTodoMutation,
   useGetAllTodosQuery,
@@ -45,7 +46,7 @@ const TodoList: React.FC = () => {
           required
           className="flex-1"
         />
-        <Button variant="outline" type="submit" disabled={!Boolean(newTodo)}>
+        <Button variant="outline" type="submit" disabled={!newTodo}>
           Add
         </Button>
       </form>
@@ -58,7 +59,11 @@ const TodoList: React.FC = () => {
       )}
       <ul className="space-y-2">
         {isLoading ? (
-          <div className="text-center text-gray-500 py-4">Loading...</div>
+          <Skeleton
+            containerTestId="todo-list-skeleton"
+            height={56}
+            count={2}
+          />
         ) : (
           (data || []).map((todo) => (
             <li

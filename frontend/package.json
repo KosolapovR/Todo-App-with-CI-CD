@@ -8,7 +8,7 @@
     "start": "webpack serve --mode development",
     "test": "jest --coverage",
     "test:watch": "jest --watchAll",
-    "lint": "eslint . --ext .ts,.tsx",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier --write ."
   },
@@ -32,6 +32,7 @@
     "eslint": "^8.0.0",
     "eslint-config-airbnb-typescript": "18.0.0",
     "eslint-config-prettier": "^8.0.0",
+    "eslint-import-resolver-typescript": "^3.6.3",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react": "^7.33.2",
@@ -47,6 +48,7 @@
     "ts-jest": "^28.0.0",
     "ts-loader": "^9.5.4",
     "typescript": "5.3.3",
+    "typescript-eslint": "^8.0.0",
     "webpack": "^5.102.1",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.2"
@@ -61,6 +63,7 @@
     "lucide-react": "^0.556.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-loading-skeleton": "^3.5.0",
     "react-redux": "^9.2.0",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.17",

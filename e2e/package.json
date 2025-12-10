@@ -7,7 +7,7 @@
     "test": "playwright test",
     "test:dev": "BASE_URL=http://localhost:8080 playwright test",
     "test:headed": "playwright test --headed",
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint .",
     "format": "prettier --write ."
   },
   "keywords": [],

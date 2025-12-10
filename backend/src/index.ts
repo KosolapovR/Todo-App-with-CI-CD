@@ -197,9 +197,9 @@ app.post('/api/auth/login', async (req: Request, res: Response) => {
 app.get(
   '/api/todos',
   authenticateToken,
-  (req: CustomRequest, res: Response) => {
+  async (req: CustomRequest, res: Response) => {
     if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
-
+    await new Promise((r) => setTimeout(r, 1000));
     try {
       const stmt = db.prepare(
         'SELECT * FROM todos WHERE user_id = ? ORDER BY created_at DESC'

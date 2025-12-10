@@ -5,6 +5,7 @@ import TodoList from '../components/TodoList';
 import { useAppDispatch, useAppSelector } from './hooks';
 import { logout } from '../features/auth/authSlice';
 import { Button } from '../components/ui/button';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const App: React.FC = () => {
   const token = useAppSelector((state) => state.auth.token);
