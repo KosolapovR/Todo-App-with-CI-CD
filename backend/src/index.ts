@@ -199,7 +199,6 @@ app.get(
   authenticateToken,
   async (req: CustomRequest, res: Response) => {
     if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
-    await new Promise((r) => setTimeout(r, 1000));
     try {
       const stmt = db.prepare(
         'SELECT * FROM todos WHERE user_id = ? ORDER BY created_at DESC'
